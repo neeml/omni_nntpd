@@ -20,5 +20,5 @@ defmodule RestApiWorkerWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :omni_nntpd
+  use Gettext, otp_app: :rest_api_worker
 end

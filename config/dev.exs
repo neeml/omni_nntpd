@@ -6,17 +6,17 @@ import Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
-config :omni_nntpd, RestApiWorkerWeb.Endpoint,
+config :rest_api_worker, RestApiWorkerWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "38qHeOzHaA9O85KC7/GQ2x6liUzFu0+rslkjCm1hSyvi3A/XKqojFLeROh7dsCp+",
+  secret_key_base: "l4buVFvFN2hKlvkIBMtAI7LQy2aLG1GQA+o3kp0WjoU+JCIjuRyHHNODXF5EqZUK",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:omni_nntpd, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:omni_nntpd, ~w(--watch)]}
+    esbuild: {Esbuild, :install_and_run, [:rest_api_worker, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:rest_api_worker, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -43,17 +43,17 @@ config :omni_nntpd, RestApiWorkerWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :omni_nntpd, RestApiWorkerWeb.Endpoint,
+config :rest_api_worker, RestApiWorkerWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/omni_nntpd_web/(controllers|live|components)/.*(ex|heex)$"
+      ~r"lib/rest_api_worker_web/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :omni_nntpd, dev_routes: true
+config :rest_api_worker, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
@@ -73,11 +73,3 @@ config :phoenix_live_view,
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
-
-config :logger, level: :debug
-
-config :storage_worker, StorageWorker.Repo,
-  database: "omni_nntpd_db",
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost"

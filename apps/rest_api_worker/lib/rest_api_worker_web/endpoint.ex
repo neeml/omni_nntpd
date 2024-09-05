@@ -1,13 +1,13 @@
 defmodule RestApiWorkerWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :omni_nntpd
+  use Phoenix.Endpoint, otp_app: :rest_api_worker
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_omni_nntpd_key",
-    signing_salt: "UPyVyrmz",
+    key: "_rest_api_worker_key",
+    signing_salt: "0VjDH5GB",
     same_site: "Lax"
   ]
 
@@ -21,7 +21,7 @@ defmodule RestApiWorkerWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :omni_nntpd,
+    from: :rest_api_worker,
     gzip: false,
     only: RestApiWorkerWeb.static_paths()
 

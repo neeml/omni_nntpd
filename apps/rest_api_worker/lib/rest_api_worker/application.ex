@@ -9,7 +9,7 @@ defmodule RestApiWorker.Application do
   def start(_type, _args) do
     children = [
       RestApiWorkerWeb.Telemetry,
-      {DNSCluster, query: Application.get_env(:omni_nntpd, :dns_cluster_query) || :ignore},
+      {DNSCluster, query: Application.get_env(:rest_api_worker, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: RestApiWorker.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: RestApiWorker.Finch},

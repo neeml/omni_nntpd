@@ -7,12 +7,11 @@
 # General application configuration
 import Config
 
-config :omni_nntpd,
-  namespace: RestApiWorker,
+config :rest_api_worker,
   generators: [timestamp_type: :utc_datetime, binary_id: true]
 
 # Configures the endpoint
-config :omni_nntpd, RestApiWorkerWeb.Endpoint,
+config :rest_api_worker, RestApiWorkerWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
@@ -20,7 +19,7 @@ config :omni_nntpd, RestApiWorkerWeb.Endpoint,
     layout: false
   ],
   pubsub_server: RestApiWorker.PubSub,
-  live_view: [signing_salt: "IK7phqyI"]
+  live_view: [signing_salt: "CQWhAOLF"]
 
 # Configures the mailer
 #
@@ -29,28 +28,28 @@ config :omni_nntpd, RestApiWorkerWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :omni_nntpd, RestApiWorker.Mailer, adapter: Swoosh.Adapters.Local
+config :rest_api_worker, RestApiWorker.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
-  omni_nntpd: [
+  rest_api_worker: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
-    cd: Path.expand("../apps/omni_nntpd/assets", __DIR__),
+    cd: Path.expand("../apps/rest_api_worker/assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
 
 # Configure tailwind (the version is required)
 config :tailwind,
   version: "3.4.3",
-  omni_nntpd: [
+  rest_api_worker: [
     args: ~w(
       --config=tailwind.config.js
       --input=css/app.css
       --output=../priv/static/assets/app.css
     ),
-    cd: Path.expand("../apps/omni_nntpd/assets", __DIR__)
+    cd: Path.expand("../apps/rest_api_worker/assets", __DIR__)
   ]
 
 # Configures Elixir's Logger
@@ -60,17 +59,6 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
-
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{config_env()}.exs"
-
-# Configures Elixir's Logger
-config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
-
-config :storage_worker, ecto_repos: [StorageWorker.Repo]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

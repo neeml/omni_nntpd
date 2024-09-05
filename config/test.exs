@@ -2,13 +2,13 @@ import Config
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :omni_nntpd, RestApiWorkerWeb.Endpoint,
+config :rest_api_worker, RestApiWorkerWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "SclNiEDV/4z42RWt+nxud46k42BjUaXpmxHUns08rs58Yi1YqIb0E2vqFkSCusF0",
+  secret_key_base: "84mlvX+AaQUMDzNDki+0TOD7ATg+cDvHxAli1xmfPrw1rksaGdoHO0AZ4ccwErVo",
   server: false
 
 # In test we don't send emails
-config :omni_nntpd, RestApiWorker.Mailer, adapter: Swoosh.Adapters.Test
+config :rest_api_worker, RestApiWorker.Mailer, adapter: Swoosh.Adapters.Test
 
 # Disable swoosh api client as it is only required for production adapters
 config :swoosh, :api_client, false
@@ -22,11 +22,3 @@ config :phoenix, :plug_init_mode, :runtime
 # Enable helpful, but potentially expensive runtime checks
 config :phoenix_live_view,
   enable_expensive_runtime_checks: true
-
-config :logger, level: :debug
-
-config :storage_worker, StorageWorker.Repo,
-  database: "omni_nntpd_db",
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost"

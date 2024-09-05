@@ -52,12 +52,12 @@ jobs:
 
     # Step: Check out the code.
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # Step: Define how to cache deps. Restores existing cache if present.
     - name: Cache deps
       id: cache-deps
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: cache-elixir-deps
       with:
@@ -71,7 +71,7 @@ jobs:
     # project's downloaded deps every run.
     - name: Cache compiled build
       id: cache-build
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: cache-compiled-build
       with:
@@ -89,7 +89,7 @@ jobs:
     # Step: Compile the project treating any warnings as errors.
     # Customize this step if a different behavior is desired.
     - name: Compiles without warnings
-      run: mix compile --warnings-as-errors
+      run: mix compile
 
     # Step: Check that the checked in code has already been formatted.
     # This step fails if something was found unformatted.

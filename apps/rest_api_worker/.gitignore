@@ -23,7 +23,7 @@ erl_crash.dump
 /tmp/
 
 # Ignore package tarball (built via "mix hex.build").
-omni_nntpd-*.tar
+rest_api_worker-*.tar
 
 # Ignore assets that are produced by build tools.
 /priv/static/assets/

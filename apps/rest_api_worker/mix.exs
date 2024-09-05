@@ -3,7 +3,7 @@ defmodule RestApiWorker.MixProject do
 
   def project do
     [
-      app: :omni_nntpd,
+      app: :rest_api_worker,
       version: "0.1.0",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -73,10 +73,10 @@ defmodule RestApiWorker.MixProject do
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind omni_nntpd", "esbuild omni_nntpd"],
+      "assets.build": ["tailwind rest_api_worker", "esbuild rest_api_worker"],
       "assets.deploy": [
-        "tailwind omni_nntpd --minify",
-        "esbuild omni_nntpd --minify",
+        "tailwind rest_api_worker --minify",
+        "esbuild rest_api_worker --minify",
         "phx.digest"
       ]
     ]

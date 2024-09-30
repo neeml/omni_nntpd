@@ -7,19 +7,19 @@
 # General application configuration
 import Config
 
-config :rest_api_worker,
+config :web_worker,
   generators: [timestamp_type: :utc_datetime, binary_id: true]
 
 # Configures the endpoint
-config :rest_api_worker, RestApiWorkerWeb.Endpoint,
+config :web_worker, WebWorkerWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: RestApiWorkerWeb.ErrorHTML, json: RestApiWorkerWeb.ErrorJSON],
+    formats: [html: WebWorkerWeb.ErrorHTML, json: WebWorkerWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: RestApiWorker.PubSub,
-  live_view: [signing_salt: "CQWhAOLF"]
+  pubsub_server: WebWorker.PubSub,
+  live_view: [signing_salt: "w2OGZFWb"]
 
 # Configures the mailer
 #
@@ -28,28 +28,28 @@ config :rest_api_worker, RestApiWorkerWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :rest_api_worker, RestApiWorker.Mailer, adapter: Swoosh.Adapters.Local
+config :web_worker, WebWorker.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
-  rest_api_worker: [
+  web_worker: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
-    cd: Path.expand("../apps/rest_api_worker/assets", __DIR__),
+    cd: Path.expand("../apps/web_worker/assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
 
 # Configure tailwind (the version is required)
 config :tailwind,
   version: "3.4.3",
-  rest_api_worker: [
+  web_worker: [
     args: ~w(
       --config=tailwind.config.js
       --input=css/app.css
       --output=../priv/static/assets/app.css
     ),
-    cd: Path.expand("../apps/rest_api_worker/assets", __DIR__)
+    cd: Path.expand("../apps/web_worker/assets", __DIR__)
   ]
 
 # Configures Elixir's Logger

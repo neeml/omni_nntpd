@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    systems.url = "github:nix-systems/default";
     devenv.url = "github:cachix/devenv";
   };
 
@@ -10,34 +9,36 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = { self, nixpkgs, devenv, systems, ... } @ inputs:
+  outputs = { self, nixpkgs, devenv, ... } @ inputs:
     let
-      forEachSystem = nixpkgs.lib.genAttrs (import systems);
+      forEachSystem = nixpkgs.lib.genAttrs ["x86_64-linux"];
     in
     {
-      packages = forEachSystem (system: let
-        pkgs = inputs.nixpkgs.legacyPackages.${system};
-        entrypoint = pkgs.writeShellScript "entrypoint" ''
-          /bin/omni_nntpd eval "OmniNNTPd.Release.migrate"
-          /bin/omni_nntpd start
-        '';
-        inherit (pkgs) beamPackages lib;
-        in rec { 
-        omni-nntpd = beamPackages.mixRelease {
-          pname = "omni_nntpd";
-          version = "0.1.0";
-          src = ./.;
-          removeCookie = false;
-          mixNixDeps = with pkgs; import ./deps.nix { inherit lib beamPackages; };
-        };
-        default = omni-nntpd;
-        docker = pkgs.dockerTools.buildLayeredImage {
-          config.Cmd = [ "./${entrypoint}" ];
-          contents = [ omni-nntpd ];
-          name = "ghcr.io/neeml/omni_nntpd";
-          tag = "latest";
-        };
-      });
+      packages = forEachSystem (system:
+        let
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
+          entrypoint = pkgs.writeShellScript "entrypoint" ''
+            /bin/omni_nntpd eval "OmniNNTPd.Release.migrate"
+            /bin/omni_nntpd start
+          '';
+          inherit (pkgs) beamPackages lib;
+        in
+        rec {
+          omni-nntpd = beamPackages.mixRelease {
+            pname = "omni_nntpd";
+            version = "0.1.0";
+            src = ./.;
+            removeCookie = false;
+            mixNixDeps = import ./deps.nix { inherit lib beamPackages; };
+          };
+          default = omni-nntpd;
+          docker = pkgs.dockerTools.buildLayeredImage {
+            config.Cmd = [ "./${entrypoint}" ];
+            contents = [ omni-nntpd ];
+            name = "ghcr.io/neeml/omni_nntpd";
+            tag = "latest";
+          };
+        });
 
       apps = forEachSystem (system: {
         docker = {
@@ -46,4 +47,4 @@
         };
       });
     };
-  }
+}

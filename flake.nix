@@ -1,7 +1,14 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    devenv.url = "github:cachix/devenv";
+    devenv = {
+      url = "github:cachix/devenv";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
   };
 
   nixConfig = {
@@ -11,18 +18,19 @@
 
   outputs = { self, nixpkgs, devenv, ... } @ inputs:
     let
-      forEachSystem = nixpkgs.lib.genAttrs ["x86_64-linux"];
+      forEachSystem = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
     in
     {
       packages = forEachSystem (system:
         let
-          pkgs = inputs.nixpkgs.legacyPackages.${system};
+          pkgs = nixpkgs.legacyPackages.${system};
           entrypoint = pkgs.writeShellScript "entrypoint" ''
             /bin/omni_nntpd eval "OmniNNTPd.Release.migrate"
             /bin/omni_nntpd start
           '';
           inherit (pkgs) beamPackages lib;
         in
+        with pkgs;
         rec {
           omni-nntpd = beamPackages.mixRelease {
             pname = "omni_nntpd";
@@ -32,11 +40,24 @@
             mixNixDeps = import ./deps.nix { inherit lib beamPackages; };
           };
           default = omni-nntpd;
-          docker = pkgs.dockerTools.buildLayeredImage {
+          docker = dockerTools.buildLayeredImage {
             config.Cmd = [ "./${entrypoint}" ];
             contents = [ omni-nntpd ];
             name = "ghcr.io/neeml/omni_nntpd";
             tag = "latest";
+          };
+        });
+
+      devShells = forEachSystem (system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = devenv.lib.mkShell {
+            inherit inputs pkgs;
+            modules = [
+              ./devenv.nix
+            ];
           };
         });
 

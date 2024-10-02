@@ -23,12 +23,12 @@ let
 
     castore = buildMix rec {
       name = "castore";
-      version = "1.0.8";
+      version = "1.0.9";
 
       src = fetchHex {
         pkg = "castore";
         version = "${version}";
-        sha256 = "0b2b66d2ee742cb1d9cb8c8be3b43c3a70ee8651f37b75a8b982e036752983f1";
+        sha256 = "5ea956504f1ba6f2b4eb707061d8e17870de2bee95fb59d512872c2ef06925e7";
       };
 
       beamDeps = [];
@@ -88,12 +88,12 @@ let
 
     ecto = buildMix rec {
       name = "ecto";
-      version = "3.12.2";
+      version = "3.12.3";
 
       src = fetchHex {
         pkg = "ecto";
         version = "${version}";
-        sha256 = "492e67c70f3a71c6afe80d946d3ced52ecc57c53c9829791bfff1830ff5a1f0c";
+        sha256 = "9efd91506ae722f95e48dc49e70d0cb632ede3b7a23896252a60a14ac6d59165";
       };
 
       beamDeps = [ decimal jason telemetry ];
@@ -127,12 +127,12 @@ let
 
     expo = buildMix rec {
       name = "expo";
-      version = "1.0.1";
+      version = "1.1.0";
 
       src = fetchHex {
         pkg = "expo";
         version = "${version}";
-        sha256 = "f250b33274e3e56513644858c116f255d35c767c2b8e96a512fe7839ef9306a1";
+        sha256 = "fbadf93f4700fb44c331362177bdca9eeb8097e8b0ef525c9cc501cb9917c960";
       };
 
       beamDeps = [];
@@ -556,12 +556,12 @@ let
 
     swoosh = buildMix rec {
       name = "swoosh";
-      version = "1.16.12";
+      version = "1.17.1";
 
       src = fetchHex {
         pkg = "swoosh";
         version = "${version}";
-        sha256 = "0e262df1ae510d59eeaaa3db42189a2aa1b3746f73771eb2616fc3f7ee63cc20";
+        sha256 = "3b20d25e580cb79af631335a1bdcfbffd835c08ebcdc16e98577223a241a18a1";
       };
 
       beamDeps = [ bandit finch gen_smtp hackney jason mime plug telemetry ];

@@ -23,12 +23,12 @@ let
 
     castore = buildMix rec {
       name = "castore";
-      version = "1.0.9";
+      version = "1.0.10";
 
       src = fetchHex {
         pkg = "castore";
         version = "${version}";
-        sha256 = "5ea956504f1ba6f2b4eb707061d8e17870de2bee95fb59d512872c2ef06925e7";
+        sha256 = "1b0b7ea14d889d9ea21202c43a4fa015eb913021cb535e8ed91946f4b77a8848";
       };
 
       beamDeps = [];
@@ -62,12 +62,12 @@ let
 
     decimal = buildMix rec {
       name = "decimal";
-      version = "2.1.1";
+      version = "2.2.0";
 
       src = fetchHex {
         pkg = "decimal";
         version = "${version}";
-        sha256 = "53cfe5f497ed0e7771ae1a475575603d77425099ba5faef9394932b35020ffcc";
+        sha256 = "af8daf87384b51b7e611fb1a1f2c4d4876b65ef968fa8bd3adf44cff401c7f21";
       };
 
       beamDeps = [];
@@ -114,12 +114,12 @@ let
 
     esbuild = buildMix rec {
       name = "esbuild";
-      version = "0.8.1";
+      version = "0.8.2";
 
       src = fetchHex {
         pkg = "esbuild";
         version = "${version}";
-        sha256 = "25fc876a67c13cb0a776e7b5d7974851556baeda2085296c14ab48555ea7560f";
+        sha256 = "558a8a08ed78eb820efbfda1de196569d8bfa9b51e8371a1934fbb31345feda7";
       };
 
       beamDeps = [ castore jason ];
@@ -166,12 +166,12 @@ let
 
     floki = buildMix rec {
       name = "floki";
-      version = "0.36.2";
+      version = "0.36.3";
 
       src = fetchHex {
         pkg = "floki";
         version = "${version}";
-        sha256 = "a8766c0bc92f074e5cb36c4f9961982eda84c5d2b8e979ca67f5c268ec8ed580";
+        sha256 = "fe0158bff509e407735f6d40b3ee0d7deb47f3f3ee7c6c182ad28599f9f6b27a";
       };
 
       beamDeps = [];
@@ -205,12 +205,12 @@ let
 
     gettext = buildMix rec {
       name = "gettext";
-      version = "0.26.1";
+      version = "0.26.2";
 
       src = fetchHex {
         pkg = "gettext";
         version = "${version}";
-        sha256 = "01ce56f188b9dc28780a52783d6529ad2bc7124f9744e571e1ee4ea88bf08734";
+        sha256 = "aa978504bcf76511efdc22d580ba08e2279caab1066b76bb9aa81c4a1e0a32a5";
       };
 
       beamDeps = [ expo ];
@@ -439,12 +439,12 @@ let
 
     phoenix_live_view = buildMix rec {
       name = "phoenix_live_view";
-      version = "1.0.0-rc.6";
+      version = "1.0.0-rc.7";
 
       src = fetchHex {
         pkg = "phoenix_live_view";
         version = "${version}";
-        sha256 = "e56e4f1642a0b20edc2488cab30e5439595e0d8b5b259f76ef98b1c4e2e5b527";
+        sha256 = "b82a4575f6f3eb5b97922ec6874b0c52b3ca0cc5dcb4b14ddc478cbfa135dd01";
       };
 
       beamDeps = [ floki jason phoenix phoenix_html phoenix_template plug telemetry ];
@@ -517,12 +517,12 @@ let
 
     postgrex = buildMix rec {
       name = "postgrex";
-      version = "0.19.1";
+      version = "0.19.3";
 
       src = fetchHex {
         pkg = "postgrex";
         version = "${version}";
-        sha256 = "8bac7885a18f381e091ec6caf41bda7bb8c77912bb0e9285212829afe5d8a8f8";
+        sha256 = "d31c28053655b78f47f948c85bb1cf86a9c1f8ead346ba1aa0d0df017fa05b61";
       };
 
       beamDeps = [ db_connection decimal jason ];
@@ -556,12 +556,12 @@ let
 
     swoosh = buildMix rec {
       name = "swoosh";
-      version = "1.17.2";
+      version = "1.17.3";
 
       src = fetchHex {
         pkg = "swoosh";
         version = "${version}";
-        sha256 = "de914359f0ddc134dc0d7735e28922d49d0503f31e4bd66b44e26039c2226d39";
+        sha256 = "14ad57cfbb70af57323e17f569f5840a33c01f8ebc531dd3846beef3c9c95e55";
       };
 
       beamDeps = [ bandit finch gen_smtp hackney jason mime plug telemetry ];
@@ -569,12 +569,12 @@ let
 
     tailwind = buildMix rec {
       name = "tailwind";
-      version = "0.2.3";
+      version = "0.2.4";
 
       src = fetchHex {
         pkg = "tailwind";
         version = "${version}";
-        sha256 = "8e45e7a34a676a7747d04f7913a96c770c85e6be810a1d7f91e713d3a3655b5d";
+        sha256 = "c6e4a82b8727bab593700c998a4d98cf3d8025678bfde059aed71d0000c3e463";
       };
 
       beamDeps = [ castore ];

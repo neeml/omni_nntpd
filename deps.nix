@@ -1,13 +1,16 @@
-{ lib, beamPackages, overrides ? (x: y: {}) }:
-
-let
+{
+  lib,
+  beamPackages,
+  overrides ? (x: y: {}),
+}: let
   buildRebar3 = lib.makeOverridable beamPackages.buildRebar3;
   buildMix = lib.makeOverridable beamPackages.buildMix;
   buildErlangMk = lib.makeOverridable beamPackages.buildErlangMk;
 
   self = packages // (overrides self packages);
 
-  packages = with beamPackages; with self; {
+  packages = with beamPackages;
+  with self; {
     bandit = buildMix rec {
       name = "bandit";
       version = "1.5.7";
@@ -18,7 +21,7 @@ let
         sha256 = "f2dd92ae87d2cbea2fa9aa1652db157b6cba6c405cb44d4f6dd87abba41371cd";
       };
 
-      beamDeps = [ hpax plug telemetry thousand_island websock ];
+      beamDeps = [hpax plug telemetry thousand_island websock];
     };
 
     castore = buildMix rec {
@@ -57,7 +60,7 @@ let
         sha256 = "dcf08f31b2701f857dfc787fbad78223d61a32204f217f15e881dd93e4bdd3ff";
       };
 
-      beamDeps = [ telemetry ];
+      beamDeps = [telemetry];
     };
 
     decimal = buildMix rec {
@@ -96,7 +99,7 @@ let
         sha256 = "ef04e4101688a67d061e1b10d7bc1fbf00d1d13c17eef08b71d070ff9188f747";
       };
 
-      beamDeps = [ decimal jason telemetry ];
+      beamDeps = [decimal jason telemetry];
     };
 
     ecto_sql = buildMix rec {
@@ -109,7 +112,7 @@ let
         sha256 = "aff5b958a899762c5f09028c847569f7dfb9cc9d63bdb8133bff8a5546de6bf5";
       };
 
-      beamDeps = [ db_connection ecto postgrex telemetry ];
+      beamDeps = [db_connection ecto postgrex telemetry];
     };
 
     esbuild = buildMix rec {
@@ -122,7 +125,7 @@ let
         sha256 = "558a8a08ed78eb820efbfda1de196569d8bfa9b51e8371a1934fbb31345feda7";
       };
 
-      beamDeps = [ castore jason ];
+      beamDeps = [castore jason];
     };
 
     expo = buildMix rec {
@@ -161,7 +164,7 @@ let
         sha256 = "fc5324ce209125d1e2fa0fcd2634601c52a787aff1cd33ee833664a5af4ea2b6";
       };
 
-      beamDeps = [ mime mint nimble_options nimble_pool telemetry ];
+      beamDeps = [mime mint nimble_options nimble_pool telemetry];
     };
 
     floki = buildMix rec {
@@ -187,7 +190,7 @@ let
         sha256 = "497e3fe521587b00d00a00f5b85b0d454ef18be35618b9becbf4a35f45fe1bf4";
       };
 
-      beamDeps = [ ranch ];
+      beamDeps = [ranch];
     };
 
     gen_smtp = buildRebar3 rec {
@@ -213,7 +216,7 @@ let
         sha256 = "aa978504bcf76511efdc22d580ba08e2279caab1066b76bb9aa81c4a1e0a32a5";
       };
 
-      beamDeps = [ expo ];
+      beamDeps = [expo];
     };
 
     hackney = buildRebar3 rec {
@@ -226,7 +229,7 @@ let
         sha256 = "fe9094e5f1a2a2c0a7d10918fee36bfec0ec2a979994cff8cfe8058cd9af38e3";
       };
 
-      beamDeps = [ certifi idna metrics mimerl parse_trans ssl_verify_fun unicode_util_compat ];
+      beamDeps = [certifi idna metrics mimerl parse_trans ssl_verify_fun unicode_util_compat];
     };
 
     hpax = buildMix rec {
@@ -252,7 +255,7 @@ let
         sha256 = "51364e6d2f429d80e14fe4b5f8e39719cacd03eb3f9a9286e61e216feac2d2df";
       };
 
-      beamDeps = [ hackney ];
+      beamDeps = [hackney];
     };
 
     idna = buildRebar3 rec {
@@ -265,7 +268,7 @@ let
         sha256 = "92376eb7894412ed19ac475e4a86f7b413c1b9fbb5bd16dccd57934157944cea";
       };
 
-      beamDeps = [ unicode_util_compat ];
+      beamDeps = [unicode_util_compat];
     };
 
     jason = buildMix rec {
@@ -278,7 +281,7 @@ let
         sha256 = "c5eb0cab91f094599f94d55bc63409236a8ec69a21a67814529e8d5f6cc90b3b";
       };
 
-      beamDeps = [ decimal ];
+      beamDeps = [decimal];
     };
 
     metrics = buildRebar3 rec {
@@ -330,7 +333,7 @@ let
         sha256 = "5ee441dffc1892f1ae59127f74afe8fd82fda6587794278d924e4d90ea3d63f9";
       };
 
-      beamDeps = [ castore hpax ];
+      beamDeps = [castore hpax];
     };
 
     nimble_options = buildMix rec {
@@ -382,7 +385,7 @@ let
         sha256 = "c7859bc56cc5dfef19ecfc240775dae358cbaa530231118a9e014df392ace61a";
       };
 
-      beamDeps = [ castore jason phoenix_pubsub phoenix_template plug plug_crypto telemetry websock_adapter ];
+      beamDeps = [castore jason phoenix_pubsub phoenix_template plug plug_crypto telemetry websock_adapter];
     };
 
     phoenix_ecto = buildMix rec {
@@ -395,7 +398,7 @@ let
         sha256 = "3f94d025f59de86be00f5f8c5dd7b5965a3298458d21ab1c328488be3b5fcd59";
       };
 
-      beamDeps = [ ecto phoenix_html plug postgrex ];
+      beamDeps = [ecto phoenix_html plug postgrex];
     };
 
     phoenix_html = buildMix rec {
@@ -421,7 +424,7 @@ let
         sha256 = "2984aae96994fbc5c61795a73b8fb58153b41ff934019cfb522343d2d3817d59";
       };
 
-      beamDeps = [ ecto mime phoenix_live_view telemetry_metrics ];
+      beamDeps = [ecto mime phoenix_live_view telemetry_metrics];
     };
 
     phoenix_live_reload = buildMix rec {
@@ -434,7 +437,7 @@ let
         sha256 = "b4ec9cd73cb01ff1bd1cac92e045d13e7030330b74164297d1aee3907b54803c";
       };
 
-      beamDeps = [ file_system phoenix ];
+      beamDeps = [file_system phoenix];
     };
 
     phoenix_live_view = buildMix rec {
@@ -447,7 +450,7 @@ let
         sha256 = "b82a4575f6f3eb5b97922ec6874b0c52b3ca0cc5dcb4b14ddc478cbfa135dd01";
       };
 
-      beamDeps = [ floki jason phoenix phoenix_html phoenix_template plug telemetry ];
+      beamDeps = [floki jason phoenix phoenix_html phoenix_template plug telemetry];
     };
 
     phoenix_pubsub = buildMix rec {
@@ -473,7 +476,7 @@ let
         sha256 = "2c0c81f0e5c6753faf5cca2f229c9709919aba34fab866d3bc05060c9c444206";
       };
 
-      beamDeps = [ phoenix_html ];
+      beamDeps = [phoenix_html];
     };
 
     pique = buildMix rec {
@@ -486,7 +489,7 @@ let
         sha256 = "b9ea75869b37dcf98cedd8588d595aa118e03e3859185d9d9b599b8fd91b6d2c";
       };
 
-      beamDeps = [ gen_smtp ];
+      beamDeps = [gen_smtp];
     };
 
     plug = buildMix rec {
@@ -499,7 +502,7 @@ let
         sha256 = "a13ff6b9006b03d7e33874945b2755253841b238c34071ed85b0e86057f8cddc";
       };
 
-      beamDeps = [ mime plug_crypto telemetry ];
+      beamDeps = [mime plug_crypto telemetry];
     };
 
     plug_crypto = buildMix rec {
@@ -525,7 +528,7 @@ let
         sha256 = "d31c28053655b78f47f948c85bb1cf86a9c1f8ead346ba1aa0d0df017fa05b61";
       };
 
-      beamDeps = [ db_connection decimal jason ];
+      beamDeps = [db_connection decimal jason];
     };
 
     ranch = buildRebar3 rec {
@@ -564,7 +567,7 @@ let
         sha256 = "14ad57cfbb70af57323e17f569f5840a33c01f8ebc531dd3846beef3c9c95e55";
       };
 
-      beamDeps = [ bandit finch gen_smtp hackney jason mime plug telemetry ];
+      beamDeps = [bandit finch gen_smtp hackney jason mime plug telemetry];
     };
 
     tailwind = buildMix rec {
@@ -577,7 +580,7 @@ let
         sha256 = "c6e4a82b8727bab593700c998a4d98cf3d8025678bfde059aed71d0000c3e463";
       };
 
-      beamDeps = [ castore ];
+      beamDeps = [castore];
     };
 
     telemetry = buildRebar3 rec {
@@ -603,7 +606,7 @@ let
         sha256 = "f23713b3847286a534e005126d4c959ebcca68ae9582118ce436b521d1d47d5d";
       };
 
-      beamDeps = [ telemetry ];
+      beamDeps = [telemetry];
     };
 
     telemetry_poller = buildRebar3 rec {
@@ -616,7 +619,7 @@ let
         sha256 = "9eb9d9cbfd81cbd7cdd24682f8711b6e2b691289a0de6826e58452f28c103c8f";
       };
 
-      beamDeps = [ telemetry ];
+      beamDeps = [telemetry];
     };
 
     tentacat = buildMix rec {
@@ -629,7 +632,7 @@ let
         sha256 = "ac6a70af96d91f633babe968e15ab721e6e87e22e2c1481c3274000bb34c4dde";
       };
 
-      beamDeps = [ httpoison jason ];
+      beamDeps = [httpoison jason];
     };
 
     thousand_island = buildMix rec {
@@ -642,7 +645,7 @@ let
         sha256 = "2be6954916fdfe4756af3239fb6b6d75d0b8063b5df03ba76fd8a4c87849e180";
       };
 
-      beamDeps = [ telemetry ];
+      beamDeps = [telemetry];
     };
 
     unicode_util_compat = buildRebar3 rec {
@@ -681,7 +684,7 @@ let
         sha256 = "d0f478ee64deddfec64b800673fd6e0c8888b079d9f3444dd96d2a98383bdbd1";
       };
 
-      beamDeps = [ bandit plug websock ];
+      beamDeps = [bandit plug websock];
     };
 
     yugo = buildMix rec {
@@ -697,5 +700,5 @@ let
       beamDeps = [];
     };
   };
-in self
-
+in
+  self

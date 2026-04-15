@@ -686,12 +686,12 @@ let
 
     yugo = buildMix rec {
       name = "yugo";
-      version = "1.0.3";
+      version = "1.0.4";
 
       src = fetchHex {
         pkg = "yugo";
         version = "${version}";
-        sha256 = "79bbfe4e2876843395dfe5c02e6107a0370fc97f5183885d5bff927520e6d20f";
+        sha256 = "5906e0b1f955f7cbe0f90149d46fd419805e9fc97a8378574a9f4cadd7f19cd5";
       };
 
       beamDeps = [];

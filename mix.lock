@@ -52,5 +52,5 @@
   "unicode_util_compat": {:hex, :unicode_util_compat, "0.7.1", "a48703a25c170eedadca83b11e88985af08d35f37c6f664d6dcfb106a97782fc", [:rebar3], [], "hexpm", "b3a917854ce3ae233619744ad1e0102e05673136776fb2fa76234f3e03b23642"},
   "websock": {:hex, :websock, "0.5.3", "2f69a6ebe810328555b6fe5c831a851f485e303a7c8ce6c5f675abeb20ebdadc", [:mix], [], "hexpm", "6105453d7fac22c712ad66fab1d45abdf049868f253cf719b625151460b8b453"},
   "websock_adapter": {:hex, :websock_adapter, "0.5.9", "43dc3ba6d89ef5dec5b1d0a39698436a1e856d000d84bf31a3149862b01a287f", [:mix], [{:bandit, ">= 0.6.0", [hex: :bandit, repo: "hexpm", optional: true]}, {:plug, "~> 1.14", [hex: :plug, repo: "hexpm", optional: false]}, {:plug_cowboy, "~> 2.6", [hex: :plug_cowboy, repo: "hexpm", optional: true]}, {:websock, "~> 0.5", [hex: :websock, repo: "hexpm", optional: false]}], "hexpm", "5534d5c9adad3c18a0f58a9371220d75a803bf0b9a3d87e6fe072faaeed76a08"},
-  "yugo": {:hex, :yugo, "1.0.3", "fb941b54e2b013bcc43b6a25abf56b8c7be59f132a1b7a31a5a549387f4ee78b", [:mix], [], "hexpm", "79bbfe4e2876843395dfe5c02e6107a0370fc97f5183885d5bff927520e6d20f"},
+  "yugo": {:hex, :yugo, "1.0.4", "a6fb968ea2cdae14ce03cefc4b9344dcd9b6864ba2a3fbb498e1ff32c920a4bb", [:mix], [], "hexpm", "5906e0b1f955f7cbe0f90149d46fd419805e9fc97a8378574a9f4cadd7f19cd5"},
 }

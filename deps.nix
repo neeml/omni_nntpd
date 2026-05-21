@@ -62,12 +62,12 @@ let
 
     decimal = buildMix rec {
       name = "decimal";
-      version = "2.4.1";
+      version = "3.1.0";
 
       src = fetchHex {
         pkg = "decimal";
         version = "${version}";
-        sha256 = "7e618897933a8455f19a727d7c5e50a2c071a544b700e5e724298ecb4340187f";
+        sha256 = "e8b3efb3bb3a13cb5e4268ffe128569067b1972e9dee013537c71a5b073168f9";
       };
 
       beamDeps = [];
@@ -88,12 +88,12 @@ let
 
     ecto = buildMix rec {
       name = "ecto";
-      version = "3.13.5";
+      version = "3.14.0";
 
       src = fetchHex {
         pkg = "ecto";
         version = "${version}";
-        sha256 = "df9efebf70cf94142739ba357499661ef5dbb559ef902b68ea1f3c1fabce36de";
+        sha256 = "130d69ffb4285f9ce4792b65dfbb994fd13ea4cbc3cbea2524b199aa3de84af3";
       };
 
       beamDeps = [ decimal jason telemetry ];
@@ -101,15 +101,15 @@ let
 
     ecto_sql = buildMix rec {
       name = "ecto_sql";
-      version = "3.13.5";
+      version = "3.14.0";
 
       src = fetchHex {
         pkg = "ecto_sql";
         version = "${version}";
-        sha256 = "aa36751f4e6a2b56ae79efb0e088042e010ff4935fc8684e74c23b1f49e25fdc";
+        sha256 = "f4d8d36faf294c9417b5a37ec7ac8217ee2abdef5fcf197ba690f361548d3949";
       };
 
-      beamDeps = [ db_connection ecto postgrex telemetry ];
+      beamDeps = [ db_connection decimal ecto postgrex telemetry ];
     };
 
     esbuild = buildMix rec {
@@ -166,12 +166,12 @@ let
 
     floki = buildMix rec {
       name = "floki";
-      version = "0.38.2";
+      version = "0.38.3";
 
       src = fetchHex {
         pkg = "floki";
         version = "${version}";
-        sha256 = "854183daf5cb5f42a2d6b7e33f12f823329d9d36c648714adfee3515940e9716";
+        sha256 = "025aa1f5f24a70cb31bfbc7011419228596f3b062d7feda617238ba4926f83cb";
       };
 
       beamDeps = [];

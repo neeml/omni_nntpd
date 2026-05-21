@@ -36,6 +36,9 @@
         mixNixDeps = import ./deps.nix {inherit lib beamPackages;};
       };
       default = self.packages.${system}.omni-nntpd;
+      deps-to-nix = pkgs.writeShellScriptBin "deps-to-nix" ''
+        ${lib.getExe pkgs.mix2nix} > deps.nix
+      '';
       docker = pkgs.dockerTools.buildLayeredImage {
         config.Cmd = ["./${entrypoint}"];
         contents = with self.packages.${system}; [omni-nntpd];

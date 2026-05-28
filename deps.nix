@@ -62,12 +62,12 @@ let
 
     decimal = buildMix rec {
       name = "decimal";
-      version = "3.1.0";
+      version = "3.1.1";
 
       src = fetchHex {
         pkg = "decimal";
         version = "${version}";
-        sha256 = "e8b3efb3bb3a13cb5e4268ffe128569067b1972e9dee013537c71a5b073168f9";
+        sha256 = "c5f25f2ced74a0587d03e6023f595db8e924c9d3922c8c8ffd9edfc4498cf1f6";
       };
 
       beamDeps = [];
@@ -491,12 +491,12 @@ let
 
     plug = buildMix rec {
       name = "plug";
-      version = "1.19.1";
+      version = "1.19.2";
 
       src = fetchHex {
         pkg = "plug";
         version = "${version}";
-        sha256 = "560a0017a8f6d5d30146916862aaf9300b7280063651dd7e532b8be168511e62";
+        sha256 = "b6fce20a56af5e60fa5dfecf3f907bb98ec981be43c79a3809a499bc3d133de0";
       };
 
       beamDeps = [ mime plug_crypto telemetry ];
@@ -556,12 +556,12 @@ let
 
     swoosh = buildMix rec {
       name = "swoosh";
-      version = "1.25.2";
+      version = "1.25.3";
 
       src = fetchHex {
         pkg = "swoosh";
         version = "${version}";
-        sha256 = "0aecf65b2845f13f4d440e0945715432bbde2d815e2302adf7df549cd9bdafed";
+        sha256 = "cc5d2cd7f24a3ee4249e02a60a0a5c2519d396a8b8798e1ec44ea78714d68d85";
       };
 
       beamDeps = [ bandit finch gen_smtp hackney idna jason mime plug telemetry ];

@@ -22,10 +22,6 @@
   in {
     packages = forEachSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
-      entrypoint = pkgs.writeShellScript "entrypoint" ''
-        /bin/omni_nntpd eval "OmniNNTPd.Release.migrate"
-        /bin/omni_nntpd start
-      '';
       inherit (pkgs) beamPackages lib;
     in {
       omni-nntpd = beamPackages.mixRelease {
@@ -39,12 +35,18 @@
       deps-to-nix = pkgs.writeShellScriptBin "deps-to-nix" ''
         ${lib.getExe pkgs.mix2nix} > deps.nix
       '';
-      docker = pkgs.dockerTools.buildLayeredImage {
-        config.Cmd = ["./${entrypoint}"];
-        contents = with self.packages.${system}; [omni-nntpd];
-        name = "ghcr.io/neeml/omni_nntpd";
-        tag = "latest";
-      };
+      docker = let
+        entrypoint = pkgs.writeShellScript "entrypoint" ''
+          /bin/omni_nntpd eval "OmniNNTPd.Release.migrate"
+          /bin/omni_nntpd start
+        '';
+      in
+        pkgs.dockerTools.buildLayeredImage {
+          config.Cmd = ["./${entrypoint}"];
+          contents = with self.packages.${system}; [omni-nntpd];
+          name = "ghcr.io/neeml/omni_nntpd";
+          tag = "latest";
+        };
     });
 
     devShells.default = forEachSystem (system: let

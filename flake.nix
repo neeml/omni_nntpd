@@ -24,17 +24,26 @@
       pkgs = nixpkgs.legacyPackages.${system};
       inherit (pkgs) beamPackages lib;
     in {
-      omni-nntpd = beamPackages.mixRelease {
+      omni-nntpd = beamPackages.mixRelease rec {
         pname = "omni_nntpd";
         version = "0.1.0";
-        src = ./.;
-        removeCookie = false;
-        mixNixDeps = import ./deps.nix {inherit lib beamPackages;};
+        src = self;
+
+        mixFodDeps = beamPackages.fetchMixDeps {
+          inherit pname src version;
+
+          hash = "sha256-HcxihharjtMUhE+ZVyRtcHptLbWsNLwT6XKOUEt9X9o=";
+        };
+
+        passthru = {
+          inherit mixFodDeps;
+
+          elixirPackage = beamPackages.elixir;
+
+          updateScript = pkgs.nix-update-script {};
+        };
       };
       default = self.packages.${system}.omni-nntpd;
-      deps-to-nix = pkgs.writeShellScriptBin "deps-to-nix" ''
-        ${lib.getExe pkgs.mix2nix} > deps.nix
-      '';
       docker = let
         entrypoint = pkgs.writeShellScript "entrypoint" ''
           /bin/omni_nntpd eval "OmniNNTPd.Release.migrate"
@@ -56,7 +65,6 @@
         inherit inputs pkgs;
         modules = [
           ({pkgs, ...}: {
-            packages = with pkgs; [mix2nix];
             languages = {
               elixir.enable = true;
               erlang.enable = true;

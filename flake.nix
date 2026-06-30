@@ -1,9 +1,12 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    systems.url = "github:nix-systems/triplet";
     devenv = {
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
+
+      inputs.flake-compat.follows = "flake-compat";
     };
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -18,11 +21,17 @@
 
   outputs = inputs: let
     inherit (inputs) self devenv nixpkgs;
-    forEachSystem = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"];
+
+    forEachSystem = let
+      systems = import inputs.systems;
+      genPkgs = system: nixpkgs.legacyPackages.${system};
+      inherit (nixpkgs.lib) genAttrs;
+    in
+      f: genAttrs systems (system: f (genPkgs system));
   in {
-    packages = forEachSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
+    packages = forEachSystem (pkgs: let
       inherit (pkgs) beamPackages lib;
+      inherit (pkgs.stdenv.hostPlatform) system;
     in {
       omni-nntpd = beamPackages.mixRelease rec {
         pname = "omni_nntpd";
@@ -58,9 +67,7 @@
         };
     });
 
-    devShells.default = forEachSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
+    devShells.default = forEachSystem (pkgs:
       devenv.lib.mkShell {
         inherit inputs pkgs;
         modules = [
@@ -85,7 +92,9 @@
         ];
       });
 
-    apps = forEachSystem (system: {
+    apps = forEachSystem (pkgs: let
+      inherit (pkgs.stdenv.hostPlatform) system;
+    in {
       docker = let
         drv = self.packages.${system}.docker;
       in {

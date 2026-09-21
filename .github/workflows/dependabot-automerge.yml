@@ -1,0 +1,94 @@
+name: Dependabot auto-merge
+
+# Requires a repo secret `DEPENDABOT_PAT`: a PAT (or fine-grained token) with
+# `contents: write` and `pull-requests: write` on this repo. The default
+# GITHUB_TOKEN is forced read-only on workflows triggered by Dependabot, so
+# it cannot push the amended commit or enable auto-merge.
+#
+# Also requires "Allow auto-merge" enabled in repo settings, and a branch
+# protection rule on `main` that requires the CI workflow's checks — that's
+# what auto-merge actually waits on before merging.
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  metadata:
+    name: Read Dependabot metadata
+    if: github.actor == 'dependabot[bot]' || github.actor == 'shymega'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      update-type: ${{ steps.metadata.outputs.update-type }}
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          skip-commit-verification: true
+          skip-verification: true
+
+  update-fod-hash:
+    name: Test and update FOD hash
+    needs: metadata
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.DEPENDABOT_PAT }}
+          fetch-depth: 0
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Update Nix package FOD hash
+        run: nix run nixpkgs#nix-update -- omni-nntpd --flake --version=skip
+
+      - name: Build package with updated hash
+        run: nix build .#omni-nntpd --print-build-logs
+
+      - name: Amend Dependabot's commit with the updated hash
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet -- flake.nix; then
+            echo "FOD hash unchanged, nothing to amend."
+          else
+            git add flake.nix
+            git commit --amend --no-edit
+            git push --force-with-lease origin "HEAD:${HEAD_REF}"
+          fi
+
+  auto-merge:
+    name: Enable auto-merge
+    needs: [metadata, update-fod-hash]
+    if: |
+      needs.metadata.outputs.update-type == 'version-update:semver-minor' ||
+      needs.metadata.outputs.update-type == 'version-update:semver-patch' &&
+      needs.update-fod-hash.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Enable auto-merge for Dependabot PR
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.DEPENDABOT_PAT }}

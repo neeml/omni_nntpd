@@ -41,7 +41,7 @@
         mixFodDeps = beamPackages.fetchMixDeps {
           inherit pname src version;
 
-          hash = "sha256-cOWGW9f4u2lgxW5Y4jtdMNUbLN4NUIUUEU9fDLQRHAs=";
+          hash = "sha256-hg8l9ak+76i95GjyAqPtySXYzUCztd3GfG0dLfjsrQk=";
         };
 
         passthru = {
